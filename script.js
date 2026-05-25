@@ -5,6 +5,7 @@ let convertedBlob = null;
 
 const dropZone = document.getElementById('dropZone');
 const fileInput = document.getElementById('fileInput');
+const browseBtn = document.getElementById('browseBtn');
 const fileInfo = document.getElementById('fileInfo');
 const fileName = document.getElementById('fileName');
 const fileType = document.getElementById('fileType');
@@ -22,7 +23,18 @@ const CONVERSION_MAP = {
     "video": []
 };
 
-dropZone.addEventListener('click', () => fileInput.click());
+// Handle browse button click
+browseBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    fileInput.click();
+});
+
+// Handle drop zone click (but not when clicking the button)
+dropZone.addEventListener('click', (e) => {
+    if (e.target !== browseBtn && !browseBtn.contains(e.target)) {
+        fileInput.click();
+    }
+});
 
 dropZone.addEventListener('dragover', (e) => {
     e.preventDefault();
